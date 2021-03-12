@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>formData-Method</title>
+</head>
+<body>
+    <div>
+        <h1>Enter your file</h1>
+        <input name="file" type="file" id="image" required onchange="getImage();">
+    </div>
+<script>
+    async function getImage(){
+        // Get Image file 
+        let getImageFile = document.getElementById("image").files[0];
+        // Convert Image to formData
+        const formFile = new FormData();
+        await formFile.append('userFile' , getImageFile);
+
+        fetch('http://192.168.1.2:100/image_upload' , {
+            method: 'POST',
+            body: formFile
+        })
+        .then(async (res)=>{
+            let jsonObject = await res.json();
+            console.log(jsonObject);
+        })
+    }
+</script>
+</body>
+</html>
